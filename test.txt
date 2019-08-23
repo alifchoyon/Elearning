@@ -1,0 +1,186 @@
+create table student
+	(studentid			int NOT NULL AUTO_INCREMENT,
+	 firstName			varchar(20) not null,
+	 lastName			varchar(20) not null, 
+	 dept_name		varchar(20), 
+	 password		varchar(20), 
+	 email		varchar(20),
+	 gender		varchar(20),
+	 
+	 primary key (studentid)
+	 
+	);
+	
+create table faculty
+	(facultyid			int NOT NULL AUTO_INCREMENT,
+	 firstName			varchar(20) not null,
+	 lastName			varchar(20) not null, 
+	 dept_name		varchar(20), 
+	 password		varchar(20), 
+	 email		varchar(20),
+	 gender		varchar(20),
+	 
+	 primary key (facultyid)
+	 
+	);
+	
+create table article
+	(articleid			int NOT NULL AUTO_INCREMENT,
+	 name varchar(50) not null,
+	 description varchar(500) not null,
+	 facultyid			int, 
+	 
+	 primary key (articleid),
+	 foreign key (facultyid) references faculty(facultyid)	on delete cascade
+	  
+	);
+	
+create table student_phoneNumber
+	(studentid			int, 
+	 phoneNumber varchar(20) not null,
+	 
+	 foreign key (studentid) references student(studentid)
+		on delete set null
+	);
+	
+
+create table can_read
+	(articleid			int,
+	 studentid			int, 
+	 
+	 
+	  foreign key (articleid) references article(articleid)
+		on delete set null,
+	  foreign key (studentid) references student(studentid)
+		on delete set null
+	 
+	);
+	
+	
+	
+create table article_links
+	(articleid			int, 
+	 links varchar(100) not null,
+	 
+	  foreign key (articleid) references article(articleid)
+		on delete set null
+	 
+	);
+	
+
+create table Test
+	( 
+	  testid			int NOT NULL AUTO_INCREMENT,
+	  name			varchar(30),
+	  course_id			varchar(11),
+	  starting_timeslotid			varchar(4),
+	  ending_timeslotid			varchar(4), 
+	  facultyid			int,
+	 
+	 primary key (testid),
+	 foreign key (facultyid) references faculty(facultyid)	on delete cascade
+	  
+	 
+	 
+	);
+	
+	
+create table questionAndAnswer
+	(questionid			int NOT NULL AUTO_INCREMENT,
+	 question varchar(200) not null,
+	 answer varchar(2) not null,
+	 
+	 facultyid			int,
+	 testid			int,
+	 
+	 primary key (questionid),
+	 foreign key (facultyid) references faculty(facultyid)
+		on delete set null,
+	foreign key (testid) references Test(testid)	on delete cascade
+	 
+	);
+
+create table answer
+	(questionid			int,
+	 studentid			int,
+	  testid			int,
+	 
+	 studentAnswer			varchar(1000),
+	 
+	  foreign key (questionid) references questionAndAnswer(questionid) on delete set null,
+	  foreign key (studentid) references student(studentid) on delete set null,
+	  foreign key (testid) references Test(testid) on delete set null
+	  
+	 
+	);
+	
+	
+create table questionAndAnswer_options
+
+	(
+	 questionid			int,
+	 options varchar(100) not null,
+	 
+	  
+	  
+	  foreign key (questionid) references questionAndAnswer(questionid) on delete cascade
+	 
+	);
+	
+create table is_related
+	(questionid			int,
+	 articleid			int, 
+	 
+	  
+	  foreign key (questionid) references questionAndAnswer(questionid)	on delete set null,
+	
+	 foreign key (articleid) references article(articleid)	on delete cascade
+	  
+	 
+	);
+	
+	
+
+	
+	
+create table time_slot
+	( 
+	  timeslotid			int NOT NULL AUTO_INCREMENT,
+	  hour			varchar(2),
+	  minute			varchar(2),
+	  year			varchar(4),
+	  month			varchar(2), 
+	  day			varchar(2),
+	 
+	 primary key (timeslotid)
+	 
+	);
+	
+
+create table assignment
+	( 
+	  assignmentid			int NOT NULL AUTO_INCREMENT,
+	  name			varchar(30),
+	  description			varchar(500),
+	  link			varchar(500),
+	  
+	  starting_timeslotid			int,
+	  ending_timeslotid			int, 
+	  
+	  studentid			int,
+	  facultyid			int,
+	 
+	 primary key (assignmentid),
+	 foreign key (facultyid) references faculty(facultyid)	on delete cascade,
+	 foreign key (studentid) references student(studentid) on delete cascade
+	  
+	 
+	 
+	);
+	
+
+
+
+	
+
+	
